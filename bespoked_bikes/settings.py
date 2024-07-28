@@ -32,6 +32,7 @@ CSRF_TRUSTED_ORIGINS = ['https://bespoked-bikes-sales.azurewebsites.net/']
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_DOMAIN = '.azurewebsites.net'
 
 # Application definition
 
