@@ -1,0 +1,88 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+main.container-fluid {
+    padding: 0;
+}
+
+.container {
+        
+        background: #black;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin: 10px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.custom-navbar {
+    width: 100%; /* Adjust the width as needed */
+    height: 80px; /* Adjust the height as needed */
+}
+
+.nav-item {
+    margin-left: 20px; /* Adjust this value as needed */
+}
+
+.nav-item:last-child {
+    margin-right: 0; /* Remove margin from the last item if needed */
+}
+
+.has-error .form-control {
+    border-color: #dc3545;
+}
+
+.has-error .help-block {
+    color: #dc3545;
+}
+

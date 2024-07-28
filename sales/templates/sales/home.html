@@ -1,0 +1,134 @@
+{% extends "sales/base.html" %}
+{% load static %}
+{% block title %}<title>Home</title>{% endblock %}
+
+
+{% block extra_css %}
+<style>
+    
+.jumbotron-fluid {
+    padding: 5rem 2rem;
+    margin: 0;
+}
+
+main.container-fluid {
+    padding: 0;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="jumbotron jumbotron-fluid text-center m-0 p-5">
+        <h1 class="display-5">Welcome to BeSpoked Bikes Sales Tracker</h1>
+        <p class="lead">Efficiently track your sales, commissions, and bonuses.</p>
+        <a class="btn btn-dark btn-lg" href="{% url 'quarterly_commission_report_default' %}" role="button">View Reports</a>
+        <!--<a class="btn btn-dark btn-lg" href="{% url 'product_list' %}" role="button">View Products</a>-->
+    </div>
+    <br><br>
+
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>About the Application</h2>
+                <p>BeSpoked Bikes Sales Tracker is designed to help our sales team track their commissions and bonuses.</p>
+                <p>Please visit the Admin Dashboard (Only Admin Accessible) below for Administrative Changes</p>
+                <a class="btn btn-info btn-lg" href="{% url 'admin:index' %}" role="button">Admin Dashboard</a>
+            </div>
+            <div class="col-md-6">
+                <h2>Key Features</h2>
+                <ul>
+                    <li>Track sales and commissions</li>
+                    <li>Update product and salesperson information</li>
+                    <li>Generate quarterly commission reports</li>
+                    <li>Create a Sale</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- How It Works -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>Quarterly Reports</h3>
+                <p>The reports detail the total sales made by each salesperson, representing their contribution to the business, in total and in each Quarter.</p>
+            </div>
+            <div class="col-md-4">
+                <h3>Sales Tracking</h3>
+                <p>Record and track sale, ensuring accurate commission calculations for every transaction.</p>
+            </div>
+            <div class="col-md-4">
+                <h3>Commission Calculation</h3>
+                <p>Automatically calculate commissions for each sale based on the sale price and commission percentage.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Access -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-3">
+                <h4>Salespersons</h4>
+                <p>View and manage our team of salespersons.</p>
+                <a class="btn btn-dark" href="{% url 'salesperson_list' %}" role="button">View Salespersons</a>
+            </div>
+            <div class="col-md-3">
+                <h4>Products</h4>
+                <p>Explore our bicycles and accessories.</p>
+                <a class="btn btn-dark" href="{% url 'product_list' %}" role="button">View Products</a>
+            </div>
+            <div class="col-md-3">
+                <h4>Customers</h4>
+                <p>Customers who are currently enrolled with us.</p>
+                <a class="btn btn-dark" href="{% url 'customer_list' %}" role="button">View Customers</a>
+            </div>
+            <div class="col-md-3">
+                <h4>Sales</h4>
+                <p>Information on Sales along with Salesperson and customer details.</p>
+                <a class="btn btn-dark" href="{% url 'sales_list' %}" role="button">View Sales</a>
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+
+    <!-- Footer 
+    <footer class="bg-light text-center text-lg-start mt-5">
+        <div class="container p-4">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                    <h5>Contact Us</h5>
+                    <p>Address: 123 Bike Lane, Cycle City</p>
+                    <p>Phone: (123) 456-7890</p>
+                    <p>Email: info@bespokedbikes.com</p>
+                </div>
+                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                    <h5>Business Hours</h5>
+                    <p>Mon - Fri: 9am - 6pm</p>
+                    <p>Sat: 10am - 4pm</p>
+                    <p>Sun: Closed</p>
+                </div>
+            </div>
+        </div>
+        <div class="text-center p-3 bg-dark text-white">
+            &copy; 2024 BeSpoked Bikes. All rights reserved.
+            <div class="mt-2">
+                <a href="#" class="text-white mx-2">Facebook</a>
+                <a href="#" class="text-white mx-2">Twitter</a>
+                <a href="#" class="text-white mx-2">Instagram</a>
+                <a href="#" class="text-white mx-2">LinkedIn</a>
+            </div>
+        </div>
+    </footer>-->
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+{% endblock %}

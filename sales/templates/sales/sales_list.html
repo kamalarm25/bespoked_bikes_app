@@ -1,0 +1,141 @@
+{% extends "sales/base.html" %}
+{% load static %}
+{% block title %}<title>Sales</title>{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    
+    h1 {
+        text-align: center;
+        color: #333;
+        
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+    table, th, td {
+        border: 1px solid #ddd;
+    }
+    th, td {
+        padding: 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+        color: #333;
+    }
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        background-color: green;
+        text-decoration: none;
+        text-align: center;
+    }
+    .btn:hover {
+        background-color: white;
+    }
+
+    .filter-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+    }
+    
+    .filter-form {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    
+    .filter-form label {
+        margin-right: 10px;
+        font-weight: bold;
+    }
+    
+    .filter-form input {
+        margin-right: 10px;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    
+    .filter-form button {
+        display: inline-block;
+        padding: 8px 16px;
+        margin-left: 10px;
+        background-color: #007bff;
+        border: none;
+        border-radius: 4px;
+        color: white;
+        cursor: pointer;
+    }
+    
+    .filter-form button:hover {
+        background-color: #0056b3;
+    }
+    
+</style>
+
+<div class="container">
+    <h1>Sales List</h1>
+    <a href="{% url 'create_sale' %}" class="btn" title="Click to create a New Sale Record">Create Sale</a>
+    <p style="line-height: 0.0125;">&nbsp;</p>
+    <form class="filter-form" method="get" action="{% url 'sales_list' %}">
+        <label for="from_date">From:</label>
+        <input type="date" id="from_date" name="from_date" value="{{ request.GET.from_date }}">
+        <label for="to_date">To:</label>
+        <input type="date" id="to_date" name="to_date" value="{{ request.GET.to_date }}">
+        <button type="submit" title="Click to filter the sales">Filter</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Customer</th>
+                <th>Date</th>
+                <th>Price</th>
+                <th>Salesperson</th>
+                <th>Commission</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sale in sales %}
+                <tr>
+                    <td>{{ sale.product.name }}</td>
+                    <td>{{ sale.customer.first_name }} {{ sale.customer.last_name }}</td>
+                    <td>{{ sale.sales_date }}</td>
+                    <td>${{ sale.price }}</td>
+                    <td>{{ sale.salesperson.first_name }} {{ sale.salesperson.last_name }}</td>
+                    <td>${{ sale.commission }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6">No sales available.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends "sales/base.html" %}
+{% load static %}
+{% block title %}<title>Salespersons</title>{% endblock %}
+{% block content %}
+    
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+    .admin-link {
+        display: block;
+        text-align: right;
+        margin-bottom: 20px;
+    }
+    .admin-link a {
+        color: #007bff;
+        text-decoration: none;
+        font-size: 16px;
+    }
+    .admin-link a:hover {
+        text-decoration: underline;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: #f2f2f2;
+        color: #333;
+    }
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+    .btn {
+        display: inline-block;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        background-color: #007bff;
+        text-decoration: none;
+        text-align: center;
+        font-size: 14px;
+    }
+    .btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<div class="container">
+    <h1>Sales Persons</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Person Name</th>
+                <!--<th>Start Date</th>
+                <th>Termination Date</th>
+                <th>Contact</th>-->
+                <th>Manager</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for salesperson in salespersons %}
+                <tr>
+                    <td>{{ salesperson.first_name }} {{ salesperson.last_name }}</td>
+                    <!--<td>{{ salesperson.start_date }}</td>
+                    <td>{{ salesperson.termination_date }}</td>
+                    <td>{{ salesperson.phone }}</td>-->
+                    <td>{{ salesperson.manager }}</td>
+                    
+                    <td>
+                        <a href="{% url 'salesperson_update' salesperson.pk %}" class="btn">Edit</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3" style="text-align: center;">No salespersons available.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="admin-link">
+        <p style="line-height: 1;">&nbsp;</p>
+        <a href="{% url 'admin:index' %}">Admin Dashboard</a>
+    </div>
+</div>
+{% endblock %}

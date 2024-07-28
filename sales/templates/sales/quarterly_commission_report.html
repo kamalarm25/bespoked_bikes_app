@@ -1,0 +1,212 @@
+{% extends "sales/base.html" %}
+{% load static %}
+{% block title %}<title>Quarterly Commission Report</title>{% endblock %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    table, th, td {
+        border: 1px solid #ddd;
+    }
+    th, td {
+        padding: 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+        color: #333;
+    }
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+    .back-link {
+        text-align: center;
+        margin-top: 20px;
+    }
+    .back-link a {
+        color: #007bff;
+        text-decoration: none;
+        font-size: 16px;
+    }
+    .back-link a:hover {
+        text-decoration: underline;
+    }
+    form {
+        display: flex;
+        align-items: center; /* Vertically center the items */
+        gap: 20px; /* Space between label and dropdown */
+        margin-bottom: 20px;
+    }
+
+    form label {
+        font-size: 16px; /* Adjust the font size for better readability */
+        color: #333; /* Darker text color for better contrast */
+        white-space: nowrap; /* Prevent label from wrapping to a new line */
+    }
+
+    select {
+        padding: 10px 15px; /* Increase padding for a more comfortable click area */
+        border-radius: 5px; /* Slightly larger border radius for a softer look */
+        border: 1px solid #ddd; /* Light border for a clean appearance */
+        background-color: #fff; /* White background for the dropdown */
+        color: #333; /* Dark text color for better readability */
+        font-size: 16px; /* Match font size with label */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transitions for focus effect */
+    }
+
+    select:focus {
+        border-color: #007bff; /* Highlight border color on focus */
+        outline: none; /* Remove default focus outline */
+        box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2); /* Enhance shadow on focus */
+    }
+
+    .btn-group {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    .btn {
+        padding: 8px 12px; /* Reduce padding to make the button smaller */
+        font-size: 14px; /* Smaller font size for a more compact button */
+        border-radius: 4px; /* Slightly smaller border radius */
+        border: none; /* Remove default border */
+        color: #fff; /* Text color */
+        text-decoration: none; /* Remove underline from links */
+        display: inline-block; /* Ensure buttons line up correctly */
+        text-align: center; /* Center align text */
+        transition: background-color 0.3s, transform 0.3s; /* Smooth background color and transform transitions */
+    }
+    .btn-total {
+        background-color:green ; /* Green for Total Sales  #007bff*/
+    }
+    .btn-quarter {
+        /* background-color: #28a745;  Orange for Quarterly Reports */
+        background-color:transparent ; /* Green for Total Sales  #007bff*/
+        border: 2px solid #343a40; /* Dark border color */
+        color: #343a40;
+    }
+    .btn-total:hover {
+        background-color: #darkblue; /* Darker Green on Hover */
+    }
+
+    .btn-quarter:hover {
+        background-color: #218838; /* Darker Orange on Hover */
+    }
+    .btn.active {
+        background-color: #white;
+    }
+    .button-container {
+        display: flex;
+        justify-content: space-between; /* Space out buttons */
+        align-items: center; /* Center vertically */
+        margin-bottom: 20px; /* Space below buttons */
+    }
+
+    .left-buttons a {
+        margin-right: 10px; /* Space between buttons on the left */
+    }
+
+    .right-button {
+        margin-left: auto; /* Pushes the Total Sales button to the right */
+    }
+    .btn:hover {
+        background-color: #343a40; /* Dark background on hover */
+        color: #fff; /* White text on hover */
+    }
+
+</style>
+
+
+<div class="container">
+    <h1>Quarterly Commission Report</h1>
+    <!-- Form for year selection -->
+    <form id="year-form" method="get">
+        <label for="year">Select Year:</label>
+        <select name="year" id="year" onchange="updateButtons()">
+            {% for y in years %}
+                <option value="{{ y }}" {% if y == current_year %}selected{% endif %}>{{ y }}</option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <div class="button-container">
+        <div class="left-buttons">
+            <a href="{% url 'quarterly_commission_report' year=2024  quarter=1 %}" class="btn btn-quarter" id="btn-q1">Quarter 1 Report</a>
+            <a href="{% url 'quarterly_commission_report' year=2024  quarter=2 %}" class="btn btn-quarter" id="btn-q2">Quarter 2 Report</a>
+            <a href="{% url 'quarterly_commission_report' year=2024  quarter=3 %}" class="btn btn-quarter" id="btn-q3">Quarter 3 Report</a>
+            <a href="{% url 'quarterly_commission_report' year=2024  quarter=4 %}" class="btn btn-quarter" id="btn-q4">Quarter 4 Report</a>
+        </div>
+        <div class="right-button">
+            <a href="{% url 'quarterly_commission_report_default' %}" class="btn btn-total">Total Sales Report</a>
+        </div>
+    </div>
+
+   
+    <table>
+        <thead>
+            <tr>
+                <th>Salesperson</th>
+                <th>Total Sales</th>
+                <th>Total Commission</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in report %}
+                <tr>
+                    <td>{{ entry.salesperson__first_name }} {{ entry.salesperson__last_name }}</td>
+                    <td>${{ entry.total_sales|floatformat:2 }}</td>
+                    <td>${{ entry.total_commission|floatformat:2 }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</div>
+
+<script>
+    function updateButtons() {
+        var selectedYear = document.getElementById('year').value;
+
+        // Save the selected year to local storage
+        localStorage.setItem('selectedYear', selectedYear);
+
+        // Update the href attributes of the buttons
+        document.getElementById('btn-q1').href = "{% url 'quarterly_commission_report' year=0 quarter=1 %}".replace('0', selectedYear);
+        document.getElementById('btn-q2').href = "{% url 'quarterly_commission_report' year=0 quarter=2 %}".replace('0', selectedYear);
+        document.getElementById('btn-q3').href = "{% url 'quarterly_commission_report' year=0 quarter=3 %}".replace('0', selectedYear);
+        document.getElementById('btn-q4').href = "{% url 'quarterly_commission_report' year=0 quarter=4 %}".replace('0', selectedYear);
+        }
+        
+    // Ensure the dropdown keeps the selected year on page load
+    document.addEventListener("DOMContentLoaded", function() {
+        var selectedYear = localStorage.getItem('selectedYear');
+        if (selectedYear) {
+            document.getElementById('year').value = selectedYear;
+            updateButtons();
+        }
+    });
+
+</script>
+
+{% endblock %}

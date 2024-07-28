@@ -1,0 +1,91 @@
+{% extends "sales/base.html" %}
+{% load static %}
+{% block title %}<title>Products</title>{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    
+    h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: #f2f2f2;
+        color: #333;
+    }
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+    .btn {
+        display: inline-block;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        background-color: #007bff;
+        text-decoration: none;
+        text-align: center;
+    }
+    .btn:hover {
+        background-color: #0056b3;
+    }
+    .btn-edit {
+        background-color: #28a745;
+    }
+    .btn-edit:hover {
+        background-color: #218838;
+    }
+</style>
+
+<div class="container">
+    <h1>Products</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Manufacturer</th>
+                <th>Purchase Price</th>
+                <th>Sale Price</th>
+                <th>Quantity on Hand</th>
+                <th>Commision (%)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.manufacturer }}</td>
+                    <td>{{ product.purchase_price }}</td>
+                    <td>{{ product.sale_price }}</td>
+                    <td>{{ product.qty_on_hand }}</td>
+                    <td>{{ product.commission_percentage }}</td>
+                    <td>
+                        <a href="{% url 'product_update' product.pk %}" class="btn btn-edit">Edit</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3" style="text-align: center;">No products available.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
