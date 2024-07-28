@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CSRF_TRUSTED_ORIGINS = ['https://bespoked-bikes-sales.azurewebsites.net/']
 
 # Application definition
 
