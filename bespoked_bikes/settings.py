@@ -30,6 +30,9 @@ ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = ['https://bespoked-bikes-sales.azurewebsites.net/']
 
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
 # Application definition
 
 INSTALLED_APPS = [
